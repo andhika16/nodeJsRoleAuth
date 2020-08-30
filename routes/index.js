@@ -9,9 +9,9 @@ route.get('/dashboard', (req, res) => {
 
 
 route.get('/', (req, res) => {
-    res.render('login', {
+    res.render('welcome', {
         layout: 'login',
-        title: 'login'
+        title: 'Welcome Page'
     })
 })
 
