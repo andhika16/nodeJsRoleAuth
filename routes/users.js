@@ -1,5 +1,6 @@
 const express = require('express');
 const route = express.Router();
+const User = require('../model/users');
 
 
 
@@ -17,7 +18,16 @@ route.get('/register', (req, res) => {
         title: 'register page'
     })
 })
-// login handler
+// register handler
+route.post('/register', (req, res) => {
+
+
+    console.log(req.body);
+
+
+
+
+})
 
 
 module.exports = route;

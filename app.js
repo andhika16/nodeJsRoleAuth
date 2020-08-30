@@ -12,6 +12,10 @@ app.engine('.hbs', exphb({
 app.set('view engine', '.hbs');
 // public layout
 app.use(express.static('public'));
+// urlparse
+app.use(express.urlencoded({
+    extended: true
+}));
 
 // route
 app.use('/', route)
