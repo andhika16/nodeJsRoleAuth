@@ -253,17 +253,13 @@ body {
 }
 
 .welcome-page {
-  width: 300px;
+  width: 1000px;
   height: auto;
   text-align: center;
 
 
 }
 
-.welcome-page a {
-  margin-top: 15px;
-  text-decoration-line: none;
-}
 
 .container {
   width: 900px;

@@ -1,14 +1,24 @@
-const express = require('express');
-const app = express();
-const PORT = 4000;
-const exphb = require('express-handlebars');
-const route = require('./routes/index');
-const moongose = require('mongoose');
+const express = require('express'),
+    app = express(),
+    PORT = 4000,
+    exphb = require('express-handlebars'),
+    route = require('./routes/index'),
+    moongose = require('mongoose'),
+    flash = require('express-flash'),
+    session = require('express-session'),
+    hbs = require('handlebars');
 
+
+hbs.registerHelper("contains", function (value, array, options) {
+    // fallback...
+    array = (array instanceof Array) ? array : [array];
+    return (array.indexOf(value) > -1) ? options.fn(this) : "";
+});
 // template engine
 app.engine('.hbs', exphb({
     extname: '.hbs'
 }));
+// hbs view engine
 app.set('view engine', '.hbs');
 // public layout
 app.use(express.static('public'));
@@ -16,10 +26,35 @@ app.use(express.static('public'));
 app.use(express.urlencoded({
     extended: true
 }));
+// flash middleware flash
+app.use(flash());
+
+// session
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
+
+// global var
+// app.use((req, res, next) => {
+//     res.locals.success_msg = req.flash('success_msg');
+//     res.locals.error_msg = req.flash('error_msg');
+//     res.locals.error = req.flash('error');
+//     next();
+
+// });
+app.use(function (req, res, next) {
+    // if there's a flash message in the session request, make it available 
+    // in the response, then delete it
+    res.locals.sessionFlash = req.session.sessionFlash;
+    delete req.session.sessionFlash;
+    next();
+});
 
 // route
 app.use('/', route)
-app.use('/users', require('./routes/users'))
+app.use('/users', require('./routes/users'));
 // server connect
 app.listen(PORT, () => {
     console.log(`server connected ${PORT}`);

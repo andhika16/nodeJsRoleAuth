@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         default: 'user',
         enum: ['user', 'admin']
     },
-    password: {
+    pass: {
         type: String,
         required: true
     },
