@@ -1,5 +1,8 @@
-const express = require('express');
-const route = express.Router();
+const express = require('express'),
+    route = express.Router(),
+    {
+        authUser
+    } = require('../config/auth');
 
 route.get('/', (req, res) => {
     res.render('welcome', {
@@ -7,7 +10,7 @@ route.get('/', (req, res) => {
         title: 'Welcome Page'
     })
 })
-route.get('/dashboard', (req, res) => {
+route.get('/dashboard', authUser, (req, res) => {
     res.render('dashboard')
 })
 route.all('/session-flash', function (req, res) {
@@ -19,7 +22,7 @@ route.all('/session-flash', function (req, res) {
 });
 
 
-route.get('/admin', (req, res) => {
+route.get('/admin', authUser, (req, res) => {
     res.render('admin', {
         title: 'admin Page'
     })

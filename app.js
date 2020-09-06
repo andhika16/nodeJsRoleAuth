@@ -2,7 +2,6 @@ const express = require('express'),
     app = express(),
     PORT = 4000,
     exphb = require('express-handlebars'),
-    route = require('./routes/index'),
     moongose = require('mongoose'),
     flash = require('express-flash'),
     session = require('express-session'),
@@ -53,7 +52,7 @@ app.use(function (req, res, next) {
 });
 
 // route
-app.use('/', route)
+app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'));
 // server connect
 app.listen(PORT, () => {
