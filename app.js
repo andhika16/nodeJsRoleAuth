@@ -5,7 +5,10 @@ const express = require('express'),
     moongose = require('mongoose'),
     flash = require('express-flash'),
     session = require('express-session'),
-    hbs = require('handlebars');
+    hbs = require('handlebars'),
+    {
+        setUser
+    } = require('./config/auth');
 
 
 hbs.registerHelper("contains", function (value, array, options) {
@@ -13,6 +16,7 @@ hbs.registerHelper("contains", function (value, array, options) {
     array = (array instanceof Array) ? array : [array];
     return (array.indexOf(value) > -1) ? options.fn(this) : "";
 });
+
 // template engine
 app.engine('.hbs', exphb({
     extname: '.hbs'
@@ -50,7 +54,8 @@ app.use(function (req, res, next) {
     delete req.session.sessionFlash;
     next();
 });
-
+// userID
+app.use(setUser)
 // route
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'));

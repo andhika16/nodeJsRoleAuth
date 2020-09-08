@@ -92,7 +92,7 @@ const login_post = (req, res, next) => {
             type: 'error',
             message: 'Isi field terlebih dahulu'
         }
-        res.redirect('/users/login');
+        return res.redirect('/users/login');
     }
 
     User.findOne({
@@ -103,7 +103,7 @@ const login_post = (req, res, next) => {
                 type: 'error',
                 message: 'Email tidak terdaftar'
             }
-            res.redirect('/users/login');
+            return res.redirect('/users/login');
         } else {
             bcrypt.compare(password, user.password, (err, match) => {
                 if (err) throw err;
