@@ -21,6 +21,8 @@ hbs.registerHelper("contains", function (value, array, options) {
 app.engine('.hbs', exphb({
     extname: '.hbs'
 }));
+// json
+app.use(express.json());
 // hbs view engine
 app.set('view engine', '.hbs');
 // public layout

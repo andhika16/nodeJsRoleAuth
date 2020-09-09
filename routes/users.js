@@ -4,10 +4,12 @@ const express = require('express'),
         register,
         login,
         register_post,
-        login_post
+        login_post,
+        logout
     } = require('../controller/users');
 
-
+// logout
+route.get('/logout', logout)
 // login post
 route.post('/login', login_post);
 // login page

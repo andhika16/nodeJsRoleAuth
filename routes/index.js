@@ -10,6 +10,11 @@ route.get('/', (req, res) => {
         title: 'Welcome Page'
     })
 })
+route.get('/home', (req, res) => {
+    res.render('index', {
+        title: 'Home Page'
+    })
+})
 route.get('/dashboard', authUser, (req, res) => {
     res.render('dashboard')
 })

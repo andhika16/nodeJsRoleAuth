@@ -15,6 +15,15 @@ const register = (req, res) => {
     })
 }
 
+const logout = (req, res) => {
+    // Logout endpoint
+    req.session.sessionFlash = {
+        type: 'success',
+        message: 'Anda berhasil keluar'
+    }
+    req.session.destroy();
+    res.redirect('/users/login');
+}
 
 // / register handler
 const register_post = (req, res, next) => {
@@ -108,7 +117,12 @@ const login_post = (req, res, next) => {
             bcrypt.compare(password, user.password, (err, match) => {
                 if (err) throw err;
                 if (match) {
-
+                    req.session.user = email;
+                    if (req.session.user) {
+                        res.redirect('/dashboard')
+                    } else {
+                        res.redirect('/users/login')
+                    }
                 } else {
                     req.session.sessionFlash = {
                         type: 'error',
@@ -129,5 +143,6 @@ module.exports = {
     login,
     register,
     register_post,
-    login_post
+    login_post,
+    logout
 };
