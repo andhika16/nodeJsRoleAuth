@@ -1,7 +1,8 @@
 const express = require('express'),
     route = express.Router(),
     {
-        authUser
+        authUser,
+        authRole
     } = require('../config/auth');
 
 route.get('/', (req, res) => {
@@ -10,13 +11,15 @@ route.get('/', (req, res) => {
         title: 'Welcome Page'
     })
 })
-route.get('/home', (req, res) => {
+route.get('/home', authUser, (req, res) => {
     res.render('index', {
         title: 'Home Page'
     })
 })
 route.get('/dashboard', authUser, (req, res) => {
-    res.render('dashboard')
+    res.render('dashboard', {
+        title: 'Dashboard'
+    })
 })
 route.all('/session-flash', function (req, res) {
     req.session.sessionFlash = {
@@ -26,8 +29,12 @@ route.all('/session-flash', function (req, res) {
     res.redirect('/users/register', 301);
 });
 
+// db auth
 
-route.get('/admin', authUser, (req, res) => {
+
+
+route.get('/admin', authUser, authRole('admin'), (req, res) => {
+
     res.render('admin', {
         title: 'admin Page'
     })

@@ -1,3 +1,8 @@
+const {
+    application,
+    json
+} = require('express');
+
 const express = require('express'),
     app = express(),
     PORT = 4000,
@@ -5,10 +10,7 @@ const express = require('express'),
     moongose = require('mongoose'),
     flash = require('express-flash'),
     session = require('express-session'),
-    hbs = require('handlebars'),
-    {
-        setUser
-    } = require('./config/auth');
+    hbs = require('handlebars');
 
 
 hbs.registerHelper("contains", function (value, array, options) {
@@ -22,7 +24,9 @@ app.engine('.hbs', exphb({
     extname: '.hbs'
 }));
 // json
-app.use(express.json());
+app.use(express.json({
+    type: "application/json"
+}));
 // hbs view engine
 app.set('view engine', '.hbs');
 // public layout
@@ -57,7 +61,6 @@ app.use(function (req, res, next) {
     next();
 });
 // userID
-app.use(setUser)
 // route
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'));

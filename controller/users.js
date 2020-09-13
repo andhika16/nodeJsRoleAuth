@@ -1,3 +1,6 @@
+const {
+    json
+} = require('express');
 const User = require('../model/users'),
     bcrypt = require('bcrypt');
 
@@ -118,11 +121,8 @@ const login_post = (req, res, next) => {
                 if (err) throw err;
                 if (match) {
                     req.session.user = email;
-                    if (req.session.user) {
-                        res.redirect('/dashboard')
-                    } else {
-                        res.redirect('/users/login')
-                    }
+
+
                 } else {
                     req.session.sessionFlash = {
                         type: 'error',
